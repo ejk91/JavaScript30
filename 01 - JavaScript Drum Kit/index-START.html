@@ -58,7 +58,28 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+window.addEventListener('keydown', (event) => {
+  const sound = document.querySelector(`audio[data-key="${event.keyCode}"]`);
+  const element = document.querySelector(`div .key[data-key="${event.keyCode}"]`);
+  if (!sound) {
+    return
+  }
+  sound.currentTime = 0; //plays the audio file the begining 
+  sound.play();
+  element.classList.add("playing")
 
+
+});
+
+const keys = document.querySelectorAll(`.key`);
+keys.forEach((key) => {
+  key.addEventListener('transitionend', function(event) { //ES6 fat arrow function handles scope of this differently
+    if (event.propertyName !== 'transform') {
+      return
+    }
+    this.classList.remove('playing')
+  })
+})
 </script>
 
 
